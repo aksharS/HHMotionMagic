@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 
-public class gyroReset extends Command {
-    public gyroReset() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+public class MagicElevate extends Command {
+    public MagicElevate() {
+        requires(Robot.m_Elevator);
+        setTimeout(8);
     }
 
 
@@ -17,7 +17,7 @@ public class gyroReset extends Command {
      */
     @Override
     protected void initialize() {
-        System.out.println("RESETTING GYRO AND ENCODERS");
+        System.out.println("Motion Magic Routine Started");
     }
 
 
@@ -27,9 +27,7 @@ public class gyroReset extends Command {
      */
     @Override
     protected void execute() {
-        Robot.m_DriveBase.resetGyro();
-        Robot.m_DriveBase.resetLeftEncoder();
-        Robot.m_DriveBase.resetRightEncoder();
+        Robot.m_Elevator.MagicSetMotor(30000);
     }
 
 
@@ -53,7 +51,7 @@ public class gyroReset extends Command {
     @Override
     protected boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return false;
+        return isTimedOut();
     }
 
 
@@ -65,7 +63,7 @@ public class gyroReset extends Command {
      */
     @Override
     protected void end() {
-
+        Robot.m_Elevator.setElevatorMotor(0);
     }
 
 

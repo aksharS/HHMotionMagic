@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.TimedDrive;
-import frc.robot.commands.autoDrive;
-import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -27,7 +25,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static DriveBase m_DriveBase = new DriveBase(1);
+  public static Elevator m_Elevator = new Elevator();
   double x_Location, y_Location, distance, previousDistance, oldLeftTicks, oldRightTicks = 0;
   
   Command autonomousCommand;
@@ -39,12 +37,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_DriveBase.resetLeftEncoder();
-    m_DriveBase.resetRightEncoder();
     m_oi = new OI();
     // m_chooser.setDefaultOption("Pathfinder Test", new PathDrive(Paths.straightPoints, Paths.configSlow));
-    m_chooser.addOption("Six Seconds, Half Power", new TimedDrive(6, .5));
-    m_chooser.addOption("Go Forward 25 inches", new autoDrive(25));
     // m_chooser.addOption("Pathfinder Test", new PathDrive(Paths.straightPoints, Paths.configSlow));
     SmartDashboard.putData("Auto mode", m_chooser);
   }
@@ -59,9 +53,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Gyro value",m_DriveBase.getGyro());
-    SmartDashboard.putNumber("Left Ticks", m_DriveBase.getLeftTicks());
-    SmartDashboard.putNumber("Right Ticks", m_DriveBase.getRightTicks());
+    SmartDashboard.putNumber("Elevator Ticks", m_Elevator.getElevatorPosition());
+    SmartDashboard.putBoolean("Top HFX", m_Elevator.getTopHFX());
+    SmartDashboard.putBoolean("Bottom HFX", m_Elevator.getBottomHFX());
   }
 
   /**
@@ -92,9 +86,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     autonomousCommand = m_chooser.getSelected();
-		Robot.m_DriveBase.resetLeftEncoder();
-    Robot.m_DriveBase.resetRightEncoder();
-    Robot.m_DriveBase.resetGyro();
     
 
     /*
@@ -123,10 +114,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     System.out.println("Teleop enabled");
-    x_Location = 0;
-    y_Location = 0;
-    distance = 0;
-    previousDistance = 0;
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -137,18 +124,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    double deltaLeft = m_DriveBase.getLeftTicks() - oldLeftTicks;
-    double deltaRight = m_DriveBase.getRightTicks() - oldRightTicks;
-    distance = (deltaLeft + deltaRight)/2.0;
-    //System.out.println("Lwft Gyro: " + Math.cos(Math.toRadians(m_DriveBase.getGyro())) + "Right Gyro" + Math.sin(Math.toRadians(m_DriveBase.getGyro())) + " Left Ticks: " + m_DriveBase.getLeftTicks() + " Right Ticks: " + m_DriveBase.getRightTicks());
-    System.out.println(distance);
-    x_Location += distance * Math.cos(Math.toRadians(m_DriveBase.getGyro()));
-    y_Location += distance * Math.sin(Math.toRadians(m_DriveBase.getGyro()));
-    System.out.printf("Distance: %f X Location: %f Y Location: %f \n", distance, x_Location, y_Location);
-    oldLeftTicks = m_DriveBase.getLeftTicks();
-    oldRightTicks = m_DriveBase.getRightTicks();
-
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Elevator Output", m_Elevator.getMainMotor().getMotorOutputPercent());
+    SmartDashboard.putString("Control Mode", m_Elevator.getMainMotor().getControlMode().toString());
   }
 
   /**

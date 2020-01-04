@@ -5,5 +5,12 @@
     "debugfile": "frcJava_roborio.debugconfig",
     "project": "Frankie_HandsOn",
     "language": "java"
+  },
+  {
+    "artifact": "frcJava (in project HHMotionMagic)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "HHMotionMagic",
+    "language": "java"
   }
 ]

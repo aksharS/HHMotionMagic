@@ -17,33 +17,22 @@ public class RobotMap {
 
 public static int CtreTimeoutMs = 30;
 
-public static int FrontLeftTalonPort = 1;
-public static int FrontRightTalonPort = 4;
-public static int BackLeftTalonPort = 3;
-public static int BackRightTalonPort = 2;
-
-public static int elevatorMotor = 5;
-public static int topHallEffect = 4;
-public static int bottomHallEffect = 5;
+public static int elevatorMotor = 2;
+public static int topHallEffect = 8;
+public static int bottomHallEffect = 9;
 public static int elevatorTicksPerInch = 4096;
 public static int elevatorHeight = 51; //inches
+
 public static int elevatorLoopIdx = 0;
+public static int elevatorMotorSlotIdx = 0;
 
-public static double ticksPerRevolution = 128.1;
-public static double wheelCircumference = 20.25; // Inches
+public static double kF = 0.2;
+public static double kP = 1;
+public static double kI = 0;
+public static double kD = 0;
 
-public static double driveP = 0.05;
-public static double driveI = 0.00;
-public static double driveD = 0.00;
+public static int kPidLoopIdx = 0;
 
-public static int leftEncoderPort1 = 0;
-public static int leftEncoderPort2 = 1;
-public static int rightEncoderPort1 = 2;
-public static int rightEncoderPort2 = 3;
-
-public static double straightLineP = 0.0001;
-public static double straightLineI = 0;
-public static double straightLineD = 0;
 
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
