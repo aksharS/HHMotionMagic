@@ -3,18 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-import java.util.Optional;
-import java.util.OptionalDouble;
 
-
-public class MagicElevate extends Command {
-
-    private int ticks;
-
-    public MagicElevate(int ticks) {
+public class AutoCalibrate extends Command {
+    public AutoCalibrate() {
         requires(Robot.m_Elevator);
-        this.ticks = ticks;
-        setTimeout(8);
     }
 
 
@@ -24,7 +16,6 @@ public class MagicElevate extends Command {
      */
     @Override
     protected void initialize() {
-        System.out.println("Motion Magic Routine Started");
     }
 
 
@@ -34,9 +25,7 @@ public class MagicElevate extends Command {
      */
     @Override
     protected void execute() {
-        Robot.m_Elevator.setElevatorState("MOTION_MAGIC");
-        Robot.m_Elevator.setELEVATOR_TARGET_POSITION(Optional.of( ticks));
-        Robot.m_Elevator.MagicSetMotor(ticks);
+        Robot.m_Elevator.setElevatorState("CALIBRATION");
     }
 
 
@@ -60,7 +49,7 @@ public class MagicElevate extends Command {
     @Override
     protected boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return isTimedOut();
+        return Robot.m_Elevator.isCalibrated();
     }
 
 
@@ -72,8 +61,7 @@ public class MagicElevate extends Command {
      */
     @Override
     protected void end() {
-        Robot.m_Elevator.setElevatorState("HOLD");
-        Robot.m_Elevator.setElevatorMotor(0);
+        Robot.m_Elevator.setElevatorState("MANUAL_POSITIONING");
     }
 
 

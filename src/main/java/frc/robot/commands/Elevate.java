@@ -32,6 +32,7 @@ public class Elevate extends Command {
         SmartDashboard.putNumber("Elevator Throttle", elevateAxis);
         if (Math.abs(elevateAxis) > .075){
             Robot.m_Elevator.setElevatorMotor(elevateAxis);
+            Robot.m_Elevator.setElevatorState("MANUAL_POSITIONING");
         } else {
             Robot.m_Elevator.setElevatorMotor(0);
         }

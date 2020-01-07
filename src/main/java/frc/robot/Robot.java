@@ -56,6 +56,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Elevator Ticks", m_Elevator.getElevatorPosition());
     SmartDashboard.putBoolean("Top HFX", m_Elevator.getTopHFX());
     SmartDashboard.putBoolean("Bottom HFX", m_Elevator.getBottomHFX());
+    if (m_Elevator.getELEVATOR_TARGET_POSITION().isPresent()) {
+        SmartDashboard.putNumber("Elevator Target Position", m_Elevator.getELEVATOR_TARGET_POSITION().get());
+    }
+    m_Elevator.update();
   }
 
   /**

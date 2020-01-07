@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AutoCalibrate;
 import frc.robot.commands.MagicElevate;
 
 /**
@@ -24,9 +25,11 @@ public class OI {
     }
 
     JoystickButton driveButton11 = new JoystickButton(driveJoystick, 11);
+    JoystickButton getDriveButton12 = new JoystickButton(driveJoystick, 12);
 
     public OI() {
-        driveButton11.whenPressed(new MagicElevate());
+        driveButton11.whenPressed(new MagicElevate(20000));
+        getDriveButton12.whenPressed(new AutoCalibrate());
     }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
